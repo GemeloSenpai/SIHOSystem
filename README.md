@@ -1,61 +1,100 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://github.com/GemeloSenpai/SIHOSystem/actions"><img src="https://github.com/GemeloSenpai/SIHOSystem/workflows/tests/badge.svg" alt="Build Status"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+<img src="https://img.shields.io/badge/Version-4.2.0-blue" alt="Version 4.2.0">
+<img src="https://img.shields.io/badge/Hosting-Banahosting-green" alt="Hosted on Banahosting">
 </p>
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+# 🏥 SIHOSystem v4.2.0 - Sistema Integral Hospitalario
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🌐 **Sistema en Producción**
+**🔗 URL del Sistema:** [https://tudominio.com](https://tudominio.com) *(Reemplaza con tu dominio real)*  
+**🛠️ Hosting:** Banahosting  
+**✅ Estado:** En producción - Estable y funcional  
+**🚀 Demo en vivo:** [Ver Sistema](https://tudominio.com)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 👥 **Credenciales de Demo**
+- **👑 Administrador:** `admin@hospital.com` / `password`
+- **👨‍⚕️ Médico:** `medico@hospital.com` / `password`
+- **👩‍⚕️ Enfermero:** `enfermero@hospital.com` / `password`
+- **📋 Recepción:** `recepcion@hospital.com` / `password`
+- **🔬 Laboratorio:** `laboratorio@hospital.com` / `password`
 
-## Learning Laravel
+## 🚀 **Características Principales**
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 👥 **Sistema Multi-Rol (5 Roles Específicos)**
+- **Administrador:** Control total del sistema, gestión de usuarios, reportes
+- **Médico:** Gestión de pacientes, consultas, diagnósticos, recetas médicas
+- **Enfermero:** Atención primaria, seguimiento de pacientes, signos vitales
+- **Recepción:** Registro de pacientes, agendamiento de citas, facturación
+- **Laboratorio:** Gestión de exámenes, resultados de análisis, reportes médicos
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 📋 **9 Módulos Completos Implementados**
+1. **Gestión de Usuarios** - Sistema completo de autenticación y perfiles
+2. **Pacientes** - Historial médico digital, expedientes completos
+3. **Encargados** - Responsables legales y contacto de emergencia
+4. **Visitas** - Control de visitantes, horarios y registros
+5. **Empleados** - Staff médico y administrativo del hospital
+6. **Consultas** - Agenda médica, historial de consultas, diagnósticos
+7. **Exámenes** - Resultados de laboratorio, imágenes médicas
+8. **Recetas** - Prescripciones médicas, tratamientos, medicamentos
+9. **Administración** - Configuración del sistema y permisos
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 📸 **Galería del Sistema**
 
-## Laravel Sponsors
+### 🏠 **1. Dashboard Principal**
+![Dashboard](screenshots/01-dashboard.png)
+*Panel de control con métricas en tiempo real, gráficos estadísticos y acceso rápido a módulos principales.*
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 👥 **2. Gestión de Pacientes**
+![Pacientes](screenshots/02-pacientes.png)
+*CRUD completo de pacientes con historial médico, información personal y contactos de emergencia.*
 
-### Premium Partners
+### 🗓️ **3. Agenda de Citas**
+![Citas](screenshots/03-citas.png)
+*Sistema de agendamiento médico con calendario interactivo, horarios disponibles y confirmación de citas.*
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 👨‍⚕️ **4. Gestión de Médicos**
+![Médicos](screenshots/04-medicos.png)
+*Registro y administración del personal médico con especialidades, horarios y disponibilidad.*
 
-## Contributing
+### 📊 **5. Reportes y Estadísticas**
+![Reportes](screenshots/05-reportes.png)
+*Generación de reportes en PDF/Excel con filtros avanzados y análisis de datos hospitalarios.*
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 🔬 **6. Exámenes de Laboratorio**
+![Laboratorio](screenshots/06-laboratorio.png)
+*Gestión de exámenes médicos, resultados, imágenes diagnósticas y reportes de laboratorio.*
 
-## Code of Conduct
+### 💊 **7. Recetas Médicas**
+![Recetas](screenshots/07-recetas.png)
+*Sistema de prescripciones médicas con detalles de medicamentos, dosis y duración del tratamiento.*
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 👥 **8. Control de Visitas**
+![Visitas](screenshots/08-visitas.png)
+*Registro y monitoreo de visitantes, horarios de visita y control de acceso al hospital.*
 
-## Security Vulnerabilities
+### ⚙️ **9. Panel de Administración**
+![Admin Panel](screenshots/09-admin.png)
+*Interfaz de administración completa con gestión de usuarios, roles, permisos y configuración del sistema.*
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 🔐 **10. Sistema de Login y Roles**
+![Login](screenshots/10-login.png)
+*Interfaz de autenticación segura con selección de rol y acceso personalizado según permisos.*
 
-## License
+## 🛠️ **Stack Tecnológico**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+| Tecnología | Versión | Propósito |
+|------------|---------|-----------|
+| **Laravel** | 12.x | Framework backend MVC |
+| **PHP** | 8.2+ | Lenguaje de programación |
+| **MySQL** | 8.0 | Base de datos relacional |
+| **Tailwind CSS** | 3.4 | Framework CSS para frontend |
+| **Laravel Breeze** | Latest | Sistema de autenticación |
+| **Eloquent ORM** | - | Mapeo objeto-relacional |
+| **Banahosting** | - | Hosting en producción |
