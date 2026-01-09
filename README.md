@@ -20,11 +20,11 @@
 **🚀 Demo en vivo:** [https://hospital.twinslaboratories.com]([https://tudominio.com](https://hospital.twinslaboratories.com)) 
 
 ## 👥 **Credenciales de Demo**
-- **👑 Administrador:** `admin@hospital.com` / `password123`
-- **👨‍⚕️ Médico:** `medico@hospital.com` / `password`
-- **👩‍⚕️ Enfermero:** `enfermero@hospital.com` / `password`
-- **📋 Recepción:** `recepcion@hospital.com` / `password`
-- **🔬 Laboratorio:** `laboratorio@hospital.com` / `password`
+- **👑 Administrador:** `admin@siho.com` / `password123`
+- **👨‍⚕️ Médico:** `medico@siho.com` / `password`
+- **👩‍⚕️ Enfermero:** `enfermero@siho.com` / `password`
+- **📋 Recepción:** `recepcion@siho.com` / `password`
+- **🔬 Laboratorio:** `laboratorio@siho.com` / `password`
 
 ## 🚀 **Características Principales**
 
