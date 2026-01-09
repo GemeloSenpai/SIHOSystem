@@ -7,19 +7,20 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 <img src="https://img.shields.io/badge/Version-4.2.0-blue" alt="Version 4.2.0">
 <img src="https://img.shields.io/badge/Hosting-Banahosting-green" alt="Hosted on Banahosting">
+<img src="https://img.shields.io/badge/Laravel-12.x-FF2D20" alt="Laravel 12">
+<img src="https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC" alt="Tailwind CSS 3.4">
 </p>
-
 
 # 🏥 SIHOSystem v4.2.0 - Sistema Integral Hospitalario
 
 ## 🌐 **Sistema en Producción**
-**🔗 URL del Sistema:** [https://tudominio.com](https://tudominio.com) *(Reemplaza con tu dominio real)*  
+**🔗 URL del Sistema:** [https://hospital.twinslaboratories.com]([https://tudominio.com](https://hospital.twinslaboratories.com)) 
 **🛠️ Hosting:** Banahosting  
 **✅ Estado:** En producción - Estable y funcional  
-**🚀 Demo en vivo:** [Ver Sistema](https://tudominio.com)
+**🚀 Demo en vivo:** [https://hospital.twinslaboratories.com]([https://tudominio.com](https://hospital.twinslaboratories.com)) 
 
 ## 👥 **Credenciales de Demo**
-- **👑 Administrador:** `admin@hospital.com` / `password`
+- **👑 Administrador:** `admin@hospital.com` / `password123`
 - **👨‍⚕️ Médico:** `medico@hospital.com` / `password`
 - **👩‍⚕️ Enfermero:** `enfermero@hospital.com` / `password`
 - **📋 Recepción:** `recepcion@hospital.com` / `password`
@@ -45,56 +46,114 @@
 8. **Recetas** - Prescripciones médicas, tratamientos, medicamentos
 9. **Administración** - Configuración del sistema y permisos
 
-## 📸 **Galería del Sistema**
+## 📸 **Galería Completa del Sistema**
 
-### 🏠 **1. Dashboard Principal**
-![Dashboard](screenshots/01-dashboard.png)
-*Panel de control con métricas en tiempo real, gráficos estadísticos y acceso rápido a módulos principales.*
-
-### 👥 **2. Gestión de Pacientes**
-![Pacientes](screenshots/02-pacientes.png)
-*CRUD completo de pacientes con historial médico, información personal y contactos de emergencia.*
-
-### 🗓️ **3. Agenda de Citas**
-![Citas](screenshots/03-citas.png)
-*Sistema de agendamiento médico con calendario interactivo, horarios disponibles y confirmación de citas.*
-
-### 👨‍⚕️ **4. Gestión de Médicos**
-![Médicos](screenshots/04-medicos.png)
-*Registro y administración del personal médico con especialidades, horarios y disponibilidad.*
-
-### 📊 **5. Reportes y Estadísticas**
-![Reportes](screenshots/05-reportes.png)
-*Generación de reportes en PDF/Excel con filtros avanzados y análisis de datos hospitalarios.*
-
-### 🔬 **6. Exámenes de Laboratorio**
-![Laboratorio](screenshots/06-laboratorio.png)
-*Gestión de exámenes médicos, resultados, imágenes diagnósticas y reportes de laboratorio.*
-
-### 💊 **7. Recetas Médicas**
-![Recetas](screenshots/07-recetas.png)
-*Sistema de prescripciones médicas con detalles de medicamentos, dosis y duración del tratamiento.*
-
-### 👥 **8. Control de Visitas**
-![Visitas](screenshots/08-visitas.png)
-*Registro y monitoreo de visitantes, horarios de visita y control de acceso al hospital.*
-
-### ⚙️ **9. Panel de Administración**
-![Admin Panel](screenshots/09-admin.png)
-*Interfaz de administración completa con gestión de usuarios, roles, permisos y configuración del sistema.*
-
-### 🔐 **10. Sistema de Login y Roles**
-![Login](screenshots/10-login.png)
+### 🔐 **1. Sistema de Login**
+![Login](screenshots/01-login.png)
 *Interfaz de autenticación segura con selección de rol y acceso personalizado según permisos.*
+
+### 👑 **2. Panel de Administración**
+![Admin Dashboard](screenshots/02-admin-dashboard.png)
+*Dashboard administrativo con métricas en tiempo real, gráficos estadísticos y acceso rápido a todos los módulos.*
+
+### 📁 **3. Gestión de Expedientes**
+![Expedientes](screenshots/03-gestionar-expedientes.png)
+*Sistema completo de gestión de expedientes médicos con búsqueda avanzada y filtros por especialidad.*
+
+### 👤 **4. Edición de Usuarios**
+![Editar Usuario](screenshots/04.editar-usuario.png)
+*Interfaz para edición de usuarios, asignación de roles y configuración de permisos individuales.*
+
+### 📋 **5. Dashboard de Recepción**
+![Recepción Dashboard](screenshots/05-recepcion-dashboard.png)
+*Panel de control para recepción con registro rápido de pacientes y gestión de citas pendientes.*
+
+### 🆕 **6. Registro de Pacientes**
+![Registrar Paciente](screenshots/06-registrar-paciente.png)
+*Formulario completo para registro de nuevos pacientes con validación en tiempo real.*
+
+### 👥 **7. Lista de Pacientes**
+![Ver Pacientes](screenshots/07-ver-pacientes.png)
+*Vista completa de pacientes registrados con opciones de filtrado, búsqueda y acciones rápidas.*
+
+### 📊 **8. Historial de Visitas**
+![Historial Visitas](screenshots/08-historial-visitas.png)
+*Registro detallado de todas las visitas médicas con información de consultas, diagnósticos y tratamientos.*
+
+### 👨‍⚕️ **9. Dashboard Médico**
+![Médico Dashboard](screenshots/09-medico-dashboard.png)
+*Panel personalizado para médicos con agenda del día, pacientes pendientes y accesos rápidos.*
+
+### 🩺 **10. Registrar Consulta Médica**
+![Registrar Consulta](screenshots/10-Registrar-Consulta.png)
+*Formulario completo para registro de consultas médicas con diagnóstico, tratamiento y seguimiento.*
+
+### 📄 **11. Gestión de Expedientes Médicos**
+![Gestión Expedientes](screenshots/11-gestionar-expedientes.png)
+*Sistema organizado para gestión de expedientes médicos con historial completo y documentos adjuntos.*
+
+### 🔬 **12. Gestión de Exámenes**
+![Gestión Exámenes](screenshots/12-gestionar-examenes.png)
+*Interfaz para gestión de exámenes médicos, resultados de laboratorio y análisis clínicos.*
+
+### 📱 **13. Responsividad - Mobile View 1**
+![Responsividad 1](screenshots/12-responsividad-1.png)
+*Vista móvil optimizada del dashboard con menú colapsable y diseño adaptativo.*
+
+### 📱 **14. Responsividad - Mobile View 2**
+![Responsividad 2](screenshots/12-responsividad-2.png)
+*Interfaz móvil de gestión de pacientes con formularios adaptados a pantallas pequeñas.*
+
+### 📱 **15. Responsividad - Mobile View 3**
+![Responsividad 3](screenshots/13-responsividad-3.png)
+*Vista mobile del sistema de citas con calendario adaptativo y navegación táctil.*
+
+### 📱 **16. Responsividad - Mobile View 4**
+![Responsividad 4](screenshots/14-responsividad-4.png)
+*Panel administrativo en versión móvil con gráficos responsivos y menú optimizado.*
+
+### 📱 **17. Responsividad - Mobile View 5**
+![Responsividad 5](screenshots/15-responsividad-5.png.png)
+*Formularios médicos completamente adaptados para dispositivos móviles y tablets.*
 
 ## 🛠️ **Stack Tecnológico**
 
-| Tecnología | Versión | Propósito |
-|------------|---------|-----------|
-| **Laravel** | 12.x | Framework backend MVC |
-| **PHP** | 8.2+ | Lenguaje de programación |
-| **MySQL** | 8.0 | Base de datos relacional |
-| **Tailwind CSS** | 3.4 | Framework CSS para frontend |
-| **Laravel Breeze** | Latest | Sistema de autenticación |
-| **Eloquent ORM** | - | Mapeo objeto-relacional |
-| **Banahosting** | - | Hosting en producción |
+| Tecnología | Versión | Uso en el Proyecto |
+|------------|---------|-------------------|
+| **Laravel** | 12.x | Backend MVC, autenticación, API |
+| **PHP** | 8.2+ | Lenguaje principal del backend |
+| **MySQL** | 8.0 | Base de datos relacional principal |
+| **Tailwind CSS** | 3.4 | Framework CSS para diseño responsive |
+| **Laravel Breeze** | Latest | Sistema de autenticación y scaffolding |
+| **Eloquent ORM** | - | Mapeo objeto-relacional para MySQL |
+| **JavaScript** | ES6+ | Interactividad del frontend |
+| **Banahosting** | - | Hosting en producción con SSL |
+
+## 🎯 **Características Técnicas Destacadas**
+
+### ✅ **Arquitectura y Performance**
+- Arquitectura MVC 
+- Optimización de consultas a base de datos
+- Middleware personalizado para cada rol
+
+### ✅ **Seguridad y Validaciones**
+- Autenticación con Laravel Breeze
+- 5 niveles de roles con middleware específico
+- Validaciones en servidor y cliente
+- Protección CSRF y sanitización de datos
+- Passwords encriptados con bcrypt
+
+### ✅ **Experiencia de Usuario**
+- Diseño 100% responsive con Tailwind CSS
+- Interfaz intuitiva y user-friendly
+- Navegación optimizada para cada rol
+- Carga rápida de páginas y componentes
+- Compatibilidad total con móviles y tablets
+
+### ✅ **Funcionalidades Avanzadas**
+- Sistema de búsqueda con filtros múltiples
+- Exportación de datos a PDF y Excel
+- Reportes estadísticos con gráficos
+- Historial completo de actividades
+
+
