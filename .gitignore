@@ -1,0 +1,97 @@
+# ============================================
+# 1. SEGURIDAD - CREDENCIALES
+# ============================================
+# Nunca subir archivos con contraseñas o API keys
+.env
+.env.*
+.env.backup
+.env.production
+.env.local
+.env.testing
+/auth.json
+/storage/*.key
+
+# ============================================
+# 2. DEPENDENCIAS EXTERNAS
+# ============================================
+# Se instalan con composer install / npm install
+/vendor
+/node_modules
+composer.phar
+
+# ============================================
+# 3. ARCHIVOS DEL SISTEMA OPERATIVO
+# ============================================
+.DS_Store              # macOS
+Thumbs.db              # Windows
+Desktop.ini           # Windows
+ehthumbs.db           # Windows
+.AppleDouble          # macOS
+.LSOverride           # macOS
+
+# ============================================
+# 4. CONFIGURACIÓN DE EDITORES
+# ============================================
+/.vscode              # Visual Studio Code
+/.idea                # PHPStorm
+/.nova               # Nova Editor
+/.fleet              # Fleet Editor
+/.zed                # Zed Editor
+.phpactor.json       # PHP Actor
+
+# ============================================
+# 5. CACHE Y ARCHIVOS TEMPORALES
+# ============================================
+# Laravel cache
+bootstrap/cache/*
+.phpunit.result.cache
+.phpunit.cache
+/storage/pail
+
+# Framework cache
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+
+# Assets compilados
+/public/build
+/public/hot
+
+# ============================================
+# 6. LOGS Y REGISTROS
+# ============================================
+*.log
+laravel.log
+storage/logs/*.log
+npm-debug.log*
+yarn-debug.log*
+
+# ============================================
+# 7. ARCHIVOS DE DESPLIEGUE
+# ============================================
+/public/storage
+mix-manifest.json
+
+# ============================================
+# 8. BASE DE DATOS Y BACKUPS
+# ============================================
+*.sql
+dump.sql
+backup.sql
+*.sqlite
+database.sqlite
+
+# ============================================
+# 9. ENTORNOS VIRTUALES/DOCKER
+# ============================================
+Homestead.json
+Homestead.yaml
+docker-compose.override.yml
+
+# ============================================
+# 10. ARCHIVOS TEMPORALES
+# ============================================
+*.tmp
+*.temp
+*.swp
+*~

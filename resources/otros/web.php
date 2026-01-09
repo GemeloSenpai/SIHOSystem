@@ -1,0 +1,514 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\PacienteController;
+use App\Http\Controllers\MedicoController;
+use App\Http\Controllers\EnfermeriaController;
+use App\Http\Controllers\RecepcionController;
+use App\Http\Controllers\ExamenController;
+use App\Http\Controllers\ExpedienteController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\ExportarExamen;
+use App\Http\Controllers\PdfExpedienteController;
+use Illuminate\Support\Facades\Auth; 
+use App\Http\Controllers\LicenciaController;
+use App\Http\Controllers\RecetaController;
+
+use Illuminate\Http\Request;
+use App\Models\Examen;
+
+use App\Http\Controllers\ExportacionExpedienteController;
+
+// `(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′
+// Ruta de bienvenida de Laravel 12 fue quitada
+/*
+Route::get('/', function () {
+    return view('welcome');
+});
+*/
+
+
+
+// `(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′
+// RUTA DEL LOGIN
+Route::get('/', function () {
+    return view('auth.login');
+});
+
+// `(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′
+// VALIDACION DE LAS RUTAS PARA QUE NO SEAN ACCEDIDAS SI NO ESTA PERMITIDO.
+Route::get('/', function () {
+    if (Auth::check()) {
+        return match (Auth::user()->role) {
+            'admin'         => redirect()->route('dashboard.admin'),
+            'medico'        => redirect()->route('dashboard.medico'),
+            'enfermero'     => redirect()->route('dashboard.enfermero'),
+            'recepcionista' => redirect()->route('dashboard.recepcion'),
+            default         => redirect()->route('login'),
+        };
+    }
+    return view('auth.login');
+})->name('home');
+
+// `(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′
+// RYTAS PARA CREAR USUARIO, VIENE CON BREEZE (MODIFICAR)
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])
+    ->name('profile.edit');
+
+    Route::patch('/profile', [ProfileController::class, 'update'])
+    ->name('profile.update');
+
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+    ->name('profile.destroy');
+});
+
+Route::get('/licencia', [LicenciaController::class, 'form'])->name('licencia.form');
+Route::post('/licencia/activar', [LicenciaController::class, 'activar'])->name('licencia.activar');
+
+Route::view('/legal/terminos', 'legal.terminos')->name('legal.terminos');
+Route::view('/legal/aspectos', 'legal.aspectos')->name('legal.aspectos');
+
+// (*/ω＼*)(*/ω＼*)(*/ω＼*)(*/ω＼*)(*/ω＼*)(*/ω＼*)(*/ω＼*)(*/ω＼*)(*/ω＼*)(*/ω＼*)(*/ω＼*)(*/ω＼*)(*/ω＼*)(*/ω＼*)
+// RUTAS COMPARTIDAS POR LOS ROLES ADMIN Y MEDICO
+Route::middleware(['auth', 'active', 'role:admin,medico'])->group(function () {
+    
+    // Vista para gestionar expedientes 
+    Route::get('/expedientes', [ExpedienteController::class, 'index'])
+    ->name('expedientes.index');
+
+    // Vista para ver un expediente detallado
+    Route::get('/expedientes/ver/{id}', [ExpedienteController::class, 'ver'])
+    ->name('expedientes.ver');
+
+    // Vista para ver el expediente en formato profesional, listo para imprimir
+    Route::get('/expedientes/completo/{id}', [ExpedienteController::class, 'expedienteCompleto'])
+    ->name('expedientes.completo');  
+    
+    // MOVER AQUÍ (estaban en el grupo solo admin)
+    Route::get('/expedientes/{id}/editar', [ExpedienteController::class, 'edit'])
+        ->name('expedientes.editar');
+
+    Route::put('/expedientes/{id}', [ExpedienteController::class, 'update'])
+        ->name('expedientes.update');
+
+    // web.php
+    Route::put('/expedientes/{id}', [ExpedienteController::class, 'update'])
+    ->name('expedientes.update');
+
+    // NUEVO: vista de edición independiente
+    Route::get('/expedientes/editar/{id}', [ExpedienteController::class, 'edit'])
+    ->name('expedientes.editar');
+
+    // Update (PUT)
+    Route::put('/expedientes/{id}', [ExpedienteController::class, 'update'])
+    ->name('expedientes.update');
+
+    Route::get('/admin/expedientes/{id}/ver-examenes', [ExportarExamen::class, 'show'])
+        ->name('admin.ver-examenes');
+
+        // routes/web.php
+    //Route::get('/expedientes/{id}/pdf', [\App\Http\Controllers\ExpedienteController::class, 'pdf'])
+        //->name('expedientes.completo.pdf');
+
+    Route::get('/expedientes/completo/{id}/pdf', [\App\Http\Controllers\PdfExpedienteController::class, 'downloadViaChrome'])
+        ->name('expedientes.completo.pdf');
+
+    Route::get('/expedientes/completo/{expediente}/examenes/imprimir',
+        [\App\Http\Controllers\ImprimirExamenesController::class, 'show']
+    )->name('expedientes.examenes.imprimir');
+
+    Route::get('/expedientes/leer/{id}', [\App\Http\Controllers\ExpedienteController::class, 'read'])
+    ->name('expedientes.leer');
+
+    // routes/web.php (dentro del grupo admin,medico)
+
+    // routes/web.php  (dentro del grupo admin,medico)
+    Route::post('/expedientes/{expediente}/examenes',
+        [\App\Http\Controllers\ExamenesConsultaController::class, 'store']
+    )->name('expedientes.examenes.store');
+
+    Route::delete('/expedientes/{expediente}/examenes/{examenMedico}',
+        [\App\Http\Controllers\ExamenesConsultaController::class, 'destroy']
+    )->name('expedientes.examenes.destroy');
+
+    // nuevas rutas de recetas
+    // Ver receta (tanto admin como médico pueden ver)
+    Route::get('/recetas/{receta}', [RecetaController::class, 'show'])
+        ->name('recetas.ver');
+    
+    // Imprimir receta
+    Route::get('/recetas/{receta}/imprimir', [RecetaController::class, 'imprimir'])
+        ->name('recetas.imprimir');
+
+
+
+});
+
+
+Route::get('/admin/gestionar-examenes', function () {
+    $categorias = \App\Models\Categoria::with('examenes')->get();
+    return view('logica.admin.gestionar-examenes', compact('categorias'));
+})->middleware(['auth', 'role:admin,medico'])->name('admin.gestionar.examenes');
+
+// ╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯
+// ╰(*°▽°*)╯ Rutas para el Administrador del Sistema
+Route::middleware(['auth', 'active', 'role:admin'])->group(function () {
+    // Dashboard principal del admin (panel de control)
+    Route::get('/admin', [AdminDashboardController::class, 'index'])
+        ->name('dashboard.admin');
+
+    // Form de alta de usuario (solo vista)
+    Route::get('/admin/registrar-usuario', function () {
+        return view('logica.admin.registrar-usuario');
+    })->name('admin.registrar.usuario');
+
+    // Crear usuario (procesa el form de registro)
+    Route::post('/admin/users/store', [UserController::class, 'store'])
+        ->name('admin.users.store');
+
+    // Listado/gestión de expedientes (vista principal para admin)
+    Route::get('/admin/expedientes', [ExpedienteController::class, 'index'])
+        ->name('admin.expedientes.index');
+
+    // Forzar cierre de una sesión concreta por session-id
+    Route::delete('/admin/sesiones/{id}', [AdminDashboardController::class, 'cerrarSesion'])
+        ->name('admin.sesiones.forzarLogout');
+
+    // Cerrar todas las sesiones activas de un usuario (por userId)
+    Route::delete('/admin/sesiones-usuario/{userId}', [AdminDashboardController::class, 'cerrarTodas'])
+        ->name('admin.sesiones.cerrarTodas');
+
+    // Cierre masivo/acciones de sesiones (endpoint genérico)
+    Route::post('/cerrar-sesiones', [AdminDashboardController::class, 'cerrarSesiones'])
+        ->name('admin.cerrar.sesiones');
+
+    // Exportación de expedientes (ej. CSV/Excel)
+    Route::get('/exportar-expedientes', [\App\Http\Controllers\ExportacionExpedienteController::class, 'exportar'])
+        ->name('exportar.expedientes');
+
+    // ===== Gestión de usuarios (CRUD + acciones rápidas) =====
+    // Listado/tabla de usuarios
+    Route::get('/admin/gestionar-usuarios', [\App\Http\Controllers\UsuarioController::class, 'index'])
+        ->name('admin.usuarios.index');
+
+    // Búsqueda (querystring) - IMPORTANTE: definida antes que /admin/usuarios/{id}
+    Route::get('/admin/usuarios/buscar', [\App\Http\Controllers\UsuarioController::class, 'search'])
+        ->name('admin.usuarios.search');
+
+    // Ver detalle de un usuario por ID
+    Route::get('/admin/usuarios/{id}', [\App\Http\Controllers\UsuarioController::class, 'show'])
+        ->name('admin.usuarios.show');
+
+    // Form de edición de un usuario
+    Route::get('/admin/usuarios/{id}/edit', [\App\Http\Controllers\UsuarioController::class, 'edit'])
+        ->name('admin.usuarios.edit');
+
+    // Actualización estándar de usuario (PUT)
+    Route::put('/admin/usuarios/{id}', [\App\Http\Controllers\UsuarioController::class, 'update'])
+        ->name('admin.usuarios.update');
+
+    // Actualización rápida/inline (PATCH) para cambios puntuales
+    Route::patch('/admin/usuarios/{id}/quick', [\App\Http\Controllers\UsuarioController::class, 'quickUpdate'])
+        ->name('admin.usuarios.quick');
+
+    // Activar/desactivar usuario (toggle de estado)
+    Route::post('/admin/usuarios/{id}/toggle-estado', [\App\Http\Controllers\UsuarioController::class, 'toggleEstado'])
+        ->name('admin.usuarios.toggle');
+
+    // Reset de contraseña
+    Route::post('/admin/usuarios/{id}/reset-password', [\App\Http\Controllers\UsuarioController::class, 'resetPassword'])
+        ->name('admin.usuarios.reset');
+
+    // Eliminación de usuario
+    Route::delete('/admin/usuarios/{id}', [\App\Http\Controllers\UsuarioController::class, 'destroy'])
+        ->name('admin.usuarios.destroy');
+
+    // =========================
+    //   EXÁMENES (canónico)
+    // =========================
+    // Vista principal (listar/gestionar)
+    Route::get('/admin/examenes', [ExamenController::class, 'index'])
+        ->name('admin.gestionar.examenes');
+
+    // Crear examen
+    Route::post('/admin/examenes', [ExamenController::class, 'store'])
+        ->name('admin.examenes.store');
+
+    // Editar examen
+    Route::put('/admin/examenes/{id}', [ExamenController::class, 'update'])
+        ->name('admin.examenes.update');
+
+    // Eliminar examen (el controlador bloquea si está en uso)
+    Route::delete('/admin/examenes/{id}', [ExamenController::class, 'destroy'])
+        ->name('admin.examenes.destroy');
+});
+
+
+// (￣o￣) . z Z(￣o￣) . z Z(￣o￣) . z Z(￣o￣) . z Z(￣o￣) . z Z(￣o￣) . z Z(￣o￣) . z Z(￣o￣) . z Z(￣o￣) . z Z
+// RUTAS PARA EL ROL DE RECEPCION
+Route::middleware(['auth', 'active', 'role:recepcionista'])->group(function () {
+
+    Route::view('/recepcion', 'dashboards.RecepcionDashboard')->name('dashboard.recepcion');
+
+    // Mostrar el formulario registrar-paciente.blade.php
+    Route::get('/recepcion/registrar-paciente', function () {
+        return view('logica.recepcion.registrar-paciente');
+    })->name('recepcion.pacientes.form');
+
+    // Guardar el paciente
+    Route::post('/recepcion/pacientes/store', [RecepcionController::class, 'storePaciente'])
+    ->name('recepcion.pacientes.store');
+
+    // Ruta principal (listado)
+    Route::get('/gestionar-pacientes', [PacienteController::class, 'index'])
+    ->name('pacientes.index');
+    
+    // Ruta para búsqueda (POST)
+    Route::post('/gestionar-pacientes/buscar', [PacienteController::class, 'buscar'])
+    ->name('pacientes.buscar');
+    
+    // Ruta principal
+    Route::get('/gestionar-pacientes', [PacienteController::class, 'index'])
+    ->name('pacientes.index');
+    
+    // Búsqueda
+    Route::post('/gestionar-pacientes/buscar', [PacienteController::class, 'buscar'])
+    ->name('pacientes.buscar');
+    
+    // Operaciones CRUD
+    Route::prefix('recepcion')->group(function () {
+        Route::get('/ver-pacientes', [PacienteController::class, 'verPacientes'])
+        ->name('recepcion.verPacientes');
+            
+        Route::get('/pacientes/{id}/detalles', [PacienteController::class, 'detallesPaciente'])
+        ->name('recepcion.paciente.detalles');
+            
+        Route::delete('/pacientes/{id}', [PacienteController::class, 'eliminarPaciente'])
+        ->name('recepcion.paciente.eliminar');
+
+        Route::get('recepcion/pacientes/{id}/agregar-encargado', [PacienteController::class, 'agregarEncargado'])
+        ->name('recepcion.pacientes.agregarEncargado');
+    });
+
+    // Ruta para vista de gestión de pacientes
+    Route::get('/recepcion/pacientes/gestion', [RecepcionController::class, 'verPacientes'])
+    ->name('recepcion.pacientes.gestion');
+
+    // Ruta para mostrar el formulario de asignación de encargado
+    Route::get('/recepcion/pacientes/{id}/agregar-encargado', [RecepcionController::class, 'agregarEncargado'])
+    ->name('recepcion.pacientes.agregarEncargado');
+
+    // Ruta para guardar la relación entre paciente y encargado
+    Route::prefix('recepcion')->name('recepcion.')->group(function () {
+        // Mostrar formulario para agregar encargado a un paciente
+        Route::get('pacientes/{id}/agregar-encargado', [RecepcionController::class, 'agregarEncargado'])
+        ->name('pacientes.agregarEncargado');
+
+        // Buscar encargados por DNI o nombre (GET con query)
+        Route::get('pacientes/buscar-encargados', [RecepcionController::class, 'buscarEncargados'])
+        ->name('pacientes.buscarEncargados');
+
+        // Guardar la relación paciente - encargado (POST)
+        Route::post('pacientes/guardar-relacion', [RecepcionController::class, 'guardarRelacionEncargado'])
+        ->name('pacientes.guardarRelacion');
+    });
+
+    Route::post('/recepcion/pacientes/seleccionar-encargado', [RecepcionController::class, 'seleccionarEncargado'])
+    ->name('recepcion.pacientes.seleccionarEncargado');
+
+    Route::get('/recepcion/pacientes/{id_paciente}/asignar-encargado', [RecepcionController::class, 'formAgregarEncargado'])
+    ->name('recepcion.pacientes.formAgregarEncargado');
+
+    Route::post('/recepcion/pacientes/guardar-relacion', [RecepcionController::class, 'guardarRelacion'])
+    ->name('recepcion.pacientes.guardarRelacion');
+
+    Route::post('/recepcion/pacientes/crear-encargado-relacion', [RecepcionController::class, 'crearEncargadoYRelacion'])
+    ->name('recepcion.pacientes.crearEncargadoYRelacion');
+
+    // Editar paciente
+    Route::get('/recepcion/pacientes/{id}/editar', [RecepcionController::class, 'editarPacienteForm'])
+        ->name('recepcion.pacientes.editar');
+
+    Route::put('/recepcion/pacientes/{id}', [RecepcionController::class, 'actualizarPaciente'])
+        ->name('recepcion.pacientes.actualizar');
+
+    //
+    // Actualización completa de un encargado (todas las columnas de la persona)
+     // ===== Vista principal de pacientes (ya la usas para el botón "Volver") =====
+    Route::get('/recepcion/ver-pacientes', [PacienteController::class, 'verPacientes'])
+        ->name('recepcion.verPacientes');
+
+    // ===== Vista BUSCAR (solo encargados en tu caso actual) =====
+    Route::get('/recepcion/buscar', [RecepcionController::class, 'vistaBuscar'])
+        ->name('recepcion.buscar');
+
+    // ===== APIs Encargados =====
+
+    // Listar/buscar encargados (q, page, per_page) — la tabla llama a esta
+    Route::get('/recepcion/api/encargados', [RecepcionController::class, 'apiEncargados'])
+        ->name('recepcion.api.encargados');
+
+    // Edición rápida (teléfono/dirección) — opcional si lo usas en otras vistas
+    Route::patch('/recepcion/api/encargados/{id}', [RecepcionController::class, 'apiEncargadoQuickUpdate'])
+        ->name('recepcion.api.encargados.quick');
+
+    // **Actualización COMPLETA** para el modal (nombre, apellido, dni, edad, sexo, teléfono, dirección)
+    Route::patch('/recepcion/api/encargados/{id}/full', [RecepcionController::class, 'apiEncargadoUpdateFull'])
+        ->name('recepcion.api.encargados.update');
+
+    Route::get('/recepcion', [\App\Http\Controllers\RecepDashboardController::class, 'index'])
+        ->name('dashboard.recepcion');
+
+
+});
+
+// `(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′
+// Rutas para Enfermero
+Route::middleware(['auth', 'active', 'role:enfermero'])->group(function () {
+     // Dashboard de enfermero
+    Route::view('/enfermeria', 'dashboards.EnfermeroDashboard')
+    ->name('dashboard.enfermero');
+
+    // Mostrar formulario de registro (con o sin selección de paciente)
+    Route::get('/enfermeria/registrar-signos-vitales', [EnfermeriaController::class, 'formRegistrarSignos'])
+    ->name('enfermero.signosvitales.form');
+
+    // Buscar paciente desde formulario tradicional
+    Route::post('/enfermeria/buscar-paciente', [EnfermeriaController::class, 'buscarPacienteForm'])
+    ->name('enfermeria.paciente.buscar');
+
+    // Guardar signos vitales
+    Route::post('/enfermeria/guardar-signos', [EnfermeriaController::class, 'guardarSignos'])
+    ->name('enfermeria.signos.store');
+
+    // Ver signos vitales
+    Route::get('/enfermeria/signos/paciente/{paciente}', [EnfermeriaController::class, 'historial'])
+        ->name('enfermeria.signos.historial');
+
+    Route::put('/enfermeria/signos/{signo}', [EnfermeriaController::class, 'actualizar'])
+        ->name('enfermeria.signos.update');
+
+
+
+
+});
+
+// `(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′`(*>﹏<*)′
+Route::middleware(['auth', 'active', 'role:medico'])->group(function () {
+
+    // Vista principal del panel del médico
+    Route::view('/medico', 'dashboards.MedicoDashboard')
+    ->name('dashboard.medico');
+
+    // Buscar pacientes por nombre o DNI
+    Route::get('/medico/consulta/buscar', [MedicoController::class, 'buscarPacientes'])
+    ->name('medico.consulta.buscar');
+
+    // Obtener signos vitales más recientes del paciente
+    Route::get('/medico/signos/{paciente_id}', [MedicoController::class, 'buscarSignosVitales'])
+    ->name('medico.signos.buscar');
+
+    Route::post('/medico/guardar-solo-consulta', [MedicoController::class, 'guardarConsultaMedica'])
+    ->name('medico.consulta.soloConsulta');
+
+    Route::post('/medico/guardar-expediente', [MedicoController::class, 'guardarExpediente'])
+    ->name('medico.expediente.guardar');
+
+    Route::get('/medico/asignar-examenes/{id}', [MedicoController::class, 'vistaAsignarExamenes'])
+    ->name('medico.expediente.asignar');
+
+    Route::get('/medico/vista-expediente', [MedicoController::class, 'vistaRegistrarExpediente'])
+    ->name('medico.expediente.vista');
+
+    Route::get('/medico/registrar-consulta', [MedicoController::class, 'vistaRegistrarConsulta'])
+    ->name('medico.consulta.form');
+
+    Route::post('/medico/guardar-consulta', [MedicoController::class, 'guardarConsultaMedica'])
+    ->name('medico.consulta.soloConsulta');
+
+    Route::get('/medico/buscar-examenes', [MedicoController::class, 'buscarExamenes'])
+    ->name('medico.examenes.buscar');
+    
+    Route::get('/medico/expediente/{id}/asignar-examenes', [MedicoController::class, 'vistaAsignarExamenes'])
+    ->name('medico.expediente.asignar');
+
+    Route::post('/medico/expediente/{id}/guardar-examenes', [MedicoController::class, 'guardarExamenes'])
+    ->name('medico.examenes.guardar');
+
+    // Buscar exámenes (JSON) para el buscador integrado en la misma vista
+    Route::get('/medico/examenes/buscar', [MedicoController::class, 'buscarExamenes'])
+    ->name('medico.examenes.buscar');
+
+    // routes/web.php
+    Route::get('/medico/buscar-examenes', function (Request $request) {
+        $query = $request->input('buscar');
+        $categoria_id = $request->input('categoria_id');
+
+        $examenes = Examen::with('categoria')
+            ->when($query, fn($q) => $q->where('nombre_examen', 'like', "%$query%"))
+            ->when($categoria_id, fn($q) => $q->where('categoria_id', $categoria_id))
+            ->orderBy('nombre_examen')
+            ->get()
+            ->map(fn($e) => [
+                'id_examen' => $e->id_examen,
+                'nombre_examen' => $e->nombre_examen,
+                'nombre_categoria' => $e->categoria->nombre_categoria ?? 'Sin categoría',
+            ]);
+
+        return response()->json($examenes);
+    });
+
+    Route::get('/medico/examenes', [ExamenController::class, 'index'])
+        ->name('medico.examenes.index'); 
+
+    Route::get('/medico', [\App\Http\Controllers\MedicoDashboardController::class, 'index'])
+        ->name('dashboard.medico');
+        
+    // ============================================
+    // RUTAS PARA RECETAS MÉDICAS (MÉDICO)
+    // ============================================
+    
+    // Crear receta desde expediente
+    Route::get('/medico/recetas/crear/{expediente}', [RecetaController::class, 'crear'])
+        ->name('medico.recetas.crear');
+    
+    // Guardar nueva receta
+    Route::post('/medico/recetas/{expediente}', [RecetaController::class, 'store'])
+        ->name('medico.recetas.store');
+    
+    // Ver receta (detalle)
+    Route::get('/medico/recetas/{receta}', [RecetaController::class, 'show'])
+        ->name('medico.recetas.ver');
+    
+    // Editar receta (formulario)
+    Route::get('/medico/recetas/{receta}/editar', [RecetaController::class, 'editar'])
+        ->name('medico.recetas.editar');
+    
+    // Actualizar receta
+    Route::put('/medico/recetas/{receta}', [RecetaController::class, 'update'])
+        ->name('medico.recetas.update');
+    
+    // Eliminar receta
+    Route::delete('/medico/recetas/{receta}', [RecetaController::class, 'destroy'])
+        ->name('medico.recetas.destroy');
+    
+    // Imprimir receta (vista especial para impresión)
+    Route::get('/medico/recetas/{receta}/imprimir', [RecetaController::class, 'imprimir'])
+        ->name('medico.recetas.imprimir');
+    
+    // API: Buscar recetas por paciente (JSON)
+    Route::get('/medico/recetas/buscar-por-paciente', [RecetaController::class, 'buscarPorPaciente'])
+        ->name('medico.recetas.buscar-por-paciente');
+    
+    // API: Obtener receta por expediente (JSON)
+    Route::get('/medico/recetas/por-expediente/{expediente}', [RecetaController::class, 'porExpediente'])
+        ->name('medico.recetas.por-expediente');
+
+});
+
+require __DIR__.'/auth.php';
